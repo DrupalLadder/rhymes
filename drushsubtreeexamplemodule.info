@@ -1,3 +1,0 @@
-name = Drush Subtree Example Module
-description = Provide an example of how to maintain a module from inside a site repo using Drush Subtree
-core = 7.x

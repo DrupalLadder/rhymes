@@ -2,21 +2,21 @@
 
 /**
  * @file
- * Drush Subtree Example module.
+ * Rhymes module.
  */
 
 /**
  * Implements hook_menu().
  */
-function drushsubtreeexamplemodule_menu() {
+function rhymes_menu() {
   $items = array();
 
-  $items['drushsubtreeexamplemodule'] = array(
-    'page callback' => 'drushsubtreeexamplemodule_view',
+  $items['rhymes'] = array(
+    'page callback' => 'rhymes_view',
     'access callback' => TRUE,
   );
-  $items['drushsubtreeexamplemodule/%'] = array(
-    'page callback' => 'drushsubtreeexamplemodule_rhyme_view',
+  $items['rhymes/%'] = array(
+    'page callback' => 'rhymes_rhyme_view',
     'page arguments' => array(1),
     'access callback' => TRUE,
   );
@@ -25,25 +25,25 @@ function drushsubtreeexamplemodule_menu() {
 }
 
 /**
- * Page callback for /drushsubtreeexamplemodule.
+ * Page callback for /rhymes.
  */
-function drushsubtreeexamplemodule_view() {
+function rhymes_view() {
   $variables = array(
     'items' => array(),
     'title' => t('Rhymes'),
     'type' => 'ul',
   );
-  foreach (drushsubtreeexamplemodule_get_rhymes() as $name => $filepath) {
-    $variables['items'][]['data'] = l($name, "drushsubtreeexamplemodule/$name");
+  foreach (rhymes_get_rhymes() as $name => $filepath) {
+    $variables['items'][]['data'] = l($name, "rhymes/$name");
   }
   return theme('item_list', $variables);
 }
 
 /**
- * Page callback for drushsubtreeexamplemodule/%.
+ * Page callback for rhymes/%.
  */
-function drushsubtreeexamplemodule_rhyme_view($name) {
-  $rhymes = drushsubtreeexamplemodule_get_rhymes();
+function rhymes_rhyme_view($name) {
+  $rhymes = rhymes_get_rhymes();
 
   // Error handling.
   if (!isset($rhymes[$name])) {
@@ -66,9 +66,9 @@ function drushsubtreeexamplemodule_rhyme_view($name) {
  * @return array
  *   Rhyme files keyed by file name.
  */
-function drushsubtreeexamplemodule_get_rhymes() {
+function rhymes_get_rhymes() {
   $rhymes = array();
-  $directory = drupal_get_path('module', 'drushsubtreeexamplemodule') . '/rhymes';
+  $directory = drupal_get_path('module', 'rhymes') . '/rhymes';
   foreach (file_scan_directory($directory, '/.*/') as $file) {
     $rhymes[$file->name] = "$directory/{$file->filename}";
   }
